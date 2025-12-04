@@ -7,8 +7,7 @@ A small, client-side, dark-mode web app to track **active support time**, apply 
 Designed for solo technicians who bill only for the time they are *actively* working.
 
 👉 **Live version:**  
-https://<your-username>.github.io/SupportTimeTracker/  
-(Replace with your actual GitHub Pages URL once deployed.)
+https://MicaLovesKPOP.github.io/SupportTimeTracker/  
 
 ---
 
