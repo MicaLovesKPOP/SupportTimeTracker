@@ -1,3 +1,5 @@
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
 # Support Time Tracker
 
 A small, client-side, dark-mode web app to track **active support time**, apply a **€/minute rate**, and log session events.
