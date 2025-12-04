@@ -66,7 +66,7 @@ Deployment usually takes less than a minute.
 - Rate and discount decisions are fully manual: you can enter any rate at any time.
 - This tool is designed to help you track your own active time fairly and transparently.
 
-## License - Why AGPLv3?
+## License
 
 This project is licensed under the GNU Affero General Public License v3 (AGPLv3).
 
