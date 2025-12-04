@@ -1,4 +1,4 @@
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit-blue)](https://<your-username>.github.io/SupportTimeTracker/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit-blue)](https://MicaLovesKPOP.github.io/SupportTimeTracker/)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 
