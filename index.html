@@ -30,7 +30,6 @@
 
     <h1>Support Time Tracker</h1>
 
-    <!-- Timer + Cost Panel -->
     <div class="metrics glass-inner">
         <div class="metric-row">
             <span class="label">Time:</span>
@@ -44,15 +43,17 @@
 
         <span class="info-icon" id="billingInfo">ⓘ</span>
         <div class="tooltip" id="tooltip">
-            Time is tracked internally in seconds.<br>
+            Time is tracked in seconds.<br>
             Displayed minutes are <strong>rounded up</strong>.
         </div>
     </div>
 
     <!-- Timer Controls -->
     <div class="controls">
-        <button id="startPauseBtn" class="btn primary">Start</button>
-        <button id="stopBtn" class="btn danger" disabled>Stop</button>
+        <button id="startBtn" class="btn primary">Start</button>
+        <button id="pauseBtn" class="btn primary" style="display:none;">Pause</button>
+        <button id="stopBtn" class="btn danger" style="display:none;">Stop</button>
+        <button id="newSessionBtn" class="btn" style="display:none;">New Session</button>
     </div>
 
     <!-- Rate Controls -->
@@ -65,31 +66,30 @@
         </div>
     </div>
 
-    <!-- Manual Logging -->
-    <div class="manual-log">
-        <input id="manualInput" placeholder="Add a note and press Enter…" />
-    </div>
+    <!-- Manual Logging (hidden until Start) -->
+    <div id="manualSection" style="display:none;">
+        <div class="manual-log">
+            <input id="manualInput" placeholder="Add a note and press Enter…" />
+        </div>
 
-    <!-- Export -->
-    <div class="export-row">
-        <select id="exportType">
-            <option value="json">Export as JSON</option>
-            <option value="txt">Export as Plain Text</option>
-            <option value="csv">Export as CSV</option>
-        </select>
-        <button id="exportBtn" class="btn">Download Log</button>
-    </div>
+        <!-- Export -->
+        <div class="export-row">
+            <select id="exportType">
+                <option value="json">Export as JSON</option>
+                <option value="txt">Export as Plain Text</option>
+                <option value="csv">Export as CSV</option>
+            </select>
+            <button id="exportBtn" class="btn">Download Log</button>
+        </div>
 
-    <!-- Event Log -->
-    <div class="log glass-inner">
-        <h2>Event Log</h2>
-        <ul id="logList"></ul>
+        <!-- Event Log -->
+        <div class="log glass-inner">
+            <h2>Event Log</h2>
+            <ul id="logList"></ul>
+        </div>
     </div>
 
 </div>
-
-</body>
-</html>
 
 </body>
 </html>
