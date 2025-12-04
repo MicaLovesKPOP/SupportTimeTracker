@@ -60,7 +60,13 @@ No build steps or dependencies required.
 
 Deployment usually takes less than a minute.
 
-## Why AGPLv3?
+## Notes
+
+- All data is kept in memory only. Reloading the page clears the session.
+- Rate and discount decisions are fully manual: you can enter any rate at any time.
+- This tool is designed to help you track your own active time fairly and transparently.
+
+## License - Why AGPLv3?
 
 This project is licensed under the GNU Affero General Public License v3 (AGPLv3).
 
@@ -75,9 +81,3 @@ If you use this project in a network service or hosted application,
 AGPLv3 requires that you make your modified source code available to your users.
 
 This helps ensure that all future versions of the project stay free and open for everyone.
-
-## Notes
-
-- All data is kept in memory only. Reloading the page clears the session.
-- Rate and discount decisions are fully manual: you can enter any rate at any time.
-- This tool is designed to help you track your own active time fairly and transparently.
