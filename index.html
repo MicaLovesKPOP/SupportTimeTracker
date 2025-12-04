@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Support Time Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <h1>Support Time Tracker</h1>
+      <p class="subtitle">Active-time billing & session logging</p>
+    </header>
+
+    <main class="app-main">
+      <!-- Timing & billing overview -->
+      <section class="card timing-card">
+        <h2>Timing & Billing</h2>
+        <div class="timing-grid">
+          <div class="timing-block">
+            <span class="label">Total Active Time</span>
+            <span id="total-time" class="value">0 min</span>
+          </div>
+          <div class="timing-block">
+            <span class="label">Current Segment</span>
+            <span id="segment-time" class="value">0 min</span>
+          </div>
+          <div class="timing-block">
+            <span class="label">Rate (€/min)</span>
+            <input
+              id="rate-input"
+              type="number"
+              step="0.01"
+              min="0"
+              placeholder="0.20"
+              class="rate-input"
+            />
+          </div>
+          <div class="timing-block">
+            <span class="label">Estimated Cost</span>
+            <span id="cost-display" class="value">€0.00</span>
+          </div>
+        </div>
+        <p class="hint">
+          Time is tracked internally in seconds. Displayed minutes are **rounded up**.
+        </p>
+      </section>
+
+      <!-- Controls -->
+      <section class="card controls-card">
+        <h2>Controls</h2>
+        <div class="controls">
+          <button id="start-btn" class="btn primary">Start</button>
+          <button id="pause-btn" class="btn" disabled>Pause</button>
+          <button id="resume-btn" class="btn" disabled>Resume</button>
+          <button id="stop-btn" class="btn danger" disabled>Stop Session</button>
+          <button id="new-session-btn" class="btn secondary" disabled>New Session</button>
+        </div>
+        <p class="hint">
+          Only time while <strong>Start</strong> or <strong>Resume</strong> is active counts as billable.
+          Pauses and gaps are not billed.
+        </p>
+      </section>
+
+      <!-- Manual event logging -->
+      <section class="card events-card">
+        <h2>Manual Event Logging</h2>
+        <div class="event-form">
+          <div class="event-form-row">
+            <label for="event-actor">Actor</label>
+            <select id="event-actor">
+              <option value="customer">Customer</option>
+              <option value="you">You</option>
+              <option value="system">System</option>
+            </select>
+          </div>
+
+          <div class="event-form-row">
+            <label for="event-type">Event Type</label>
+            <select id="event-type">
+              <option value="message_sent">Message sent</option>
+              <option value="typing_start">Typing start</option>
+              <option value="typing_stop">Typing stop</option>
+              <option value="note">Note</option>
+            </select>
+          </div>
+
+          <div class="event-form-row full-width">
+            <label for="event-details">Details (optional)</label>
+            <input
+              type="text"
+              id="event-details"
+              placeholder='e.g. "Customer restarted PC", "Sent BIOS screenshot"'
+            />
+          </div>
+
+          <div class="event-form-row">
+            <button id="add-event-btn" class="btn secondary full-width">Add Event</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Event log -->
+      <section class="card log-card">
+        <h2>Event Log</h2>
+        <div id="event-log" class="event-log">
+          <!-- Log entries are appended here -->
+        </div>
+        <div class="log-actions">
+          <button id="copy-summary-btn" class="btn secondary">Copy Session Summary</button>
+          <button id="download-json-btn" class="btn secondary">Download Log (JSON)</button>
+        </div>
+      </section>
+
+      <!-- Session summary -->
+      <section class="card summary-card">
+        <h2>Session Summary</h2>
+        <textarea
+          id="summary-output"
+          class="summary-output"
+          placeholder="Session summary will appear here after you stop the session."
+          readonly
+        ></textarea>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>Support Time Tracker · Client-side only · No data leaves your browser.</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
