@@ -21,21 +21,25 @@
 // -------------------------
 
 let running = false;
+let paused = false;
 let totalSeconds = 0;
 let timerInterval = null;
 
 const timeDisplay = document.getElementById("timeDisplay");
 const costDisplay = document.getElementById("costDisplay");
 
-const startPauseBtn = document.getElementById("startPauseBtn");
+const startBtn = document.getElementById("startBtn");
+const pauseBtn = document.getElementById("pauseBtn");
 const stopBtn = document.getElementById("stopBtn");
+const newSessionBtn = document.getElementById("newSessionBtn");
+
+const manualSection = document.getElementById("manualSection");
 
 const rateInput = document.getElementById("rateInput");
 const rateUp = document.getElementById("rateUp");
 const rateDown = document.getElementById("rateDown");
 
 const manualInput = document.getElementById("manualInput");
-
 const logList = document.getElementById("logList");
 
 const exportType = document.getElementById("exportType");
@@ -54,36 +58,41 @@ billingInfo.addEventListener("mouseout", () => {
     tooltip.style.display = "none";
 });
 
-/* Utility */
+/* Utilities */
 
 function logEvent(text) {
-    const timestamp = new Date().toLocaleTimeString();
-    eventLog.push({ time: timestamp, text });
+    const time = new Date().toLocaleTimeString();
+    eventLog.push({ time, text });
 
     const li = document.createElement("li");
-    li.textContent = `${timestamp} — ${text}`;
+    li.textContent = `${time} — ${text}`;
     logList.appendChild(li);
 }
 
 function cleanRate(v) {
-    return parseFloat(v).toString();
+    return Number(v).toString();
 }
 
 function updateDisplays() {
     const minutes = Math.ceil(totalSeconds / 60);
     timeDisplay.textContent = `${minutes} min`;
 
-    const rate = parseFloat(rateInput.value || 0);
+    const rate = Number(rateInput.value || 0);
     const cost = (minutes * rate).toFixed(2);
     costDisplay.textContent = `€${cost}`;
 }
 
 /* Timer Logic */
 
-function startTimer() {
+function startSession() {
     running = true;
-    startPauseBtn.textContent = "Pause";
-    stopBtn.disabled = false;
+    paused = false;
+
+    startBtn.style.display = "none";
+    pauseBtn.style.display = "inline-block";
+    stopBtn.style.display = "inline-block";
+
+    manualSection.style.display = "block";
 
     logEvent("Session started");
 
@@ -93,44 +102,78 @@ function startTimer() {
     }, 1000);
 }
 
-function pauseTimer() {
+function pauseSession() {
+    paused = true;
     running = false;
-    clearInterval(timerInterval);
-    startPauseBtn.textContent = "Start";
 
+    clearInterval(timerInterval);
+
+    pauseBtn.textContent = "Resume";
     logEvent("Session paused");
 }
 
-function stopTimer() {
+function resumeSession() {
+    paused = false;
+    running = true;
+
+    pauseBtn.textContent = "Pause";
+    logEvent("Session resumed");
+
+    timerInterval = setInterval(() => {
+        totalSeconds++;
+        updateDisplays();
+    }, 1000);
+}
+
+function stopSession() {
     running = false;
+    paused = false;
+
     clearInterval(timerInterval);
-    startPauseBtn.textContent = "Start";
-    stopBtn.disabled = true;
+
+    pauseBtn.style.display = "none";
+    stopBtn.style.display = "none";
+    newSessionBtn.style.display = "inline-block";
 
     logEvent("Session stopped");
 }
 
-startPauseBtn.addEventListener("click", () => {
-    if (!running && totalSeconds === 0) return startTimer();
-    if (running) return pauseTimer();
-    if (!running) return startTimer(); // resume = start
+/* Button handlers */
+
+startBtn.addEventListener("click", startSession);
+
+pauseBtn.addEventListener("click", () => {
+    if (paused) resumeSession();
+    else pauseSession();
 });
 
-stopBtn.addEventListener("click", stopTimer);
+stopBtn.addEventListener("click", stopSession);
+
+newSessionBtn.addEventListener("click", () => {
+    // Reset everything
+    running = false;
+    paused = false;
+    totalSeconds = 0;
+    eventLog = [];
+    logList.innerHTML = "";
+
+    newSessionBtn.style.display = "none";
+    startBtn.style.display = "inline-block";
+
+    manualSection.style.display = "none";
+
+    updateDisplays();
+});
 
 /* Rate Controls */
 
 rateUp.addEventListener("click", () => {
-    let v = parseFloat(rateInput.value || 0);
-    v += 0.05;
-    rateInput.value = cleanRate(v);
+    rateInput.value = cleanRate(Number(rateInput.value) + 0.05);
     updateDisplays();
 });
 
 rateDown.addEventListener("click", () => {
-    let v = parseFloat(rateInput.value || 0);
-    v = Math.max(0, v - 0.05);
-    rateInput.value = cleanRate(v);
+    rateInput.value = cleanRate(Math.max(0, Number(rateInput.value) - 0.05));
     updateDisplays();
 });
 
@@ -139,7 +182,7 @@ rateInput.addEventListener("input", () => {
     updateDisplays();
 });
 
-/* Manual Logging */
+/* Manual Input */
 
 manualInput.addEventListener("keydown", e => {
     if (e.key === "Enter" && manualInput.value.trim()) {
@@ -156,28 +199,24 @@ exportBtn.addEventListener("click", () => {
     const type = exportType.value;
 
     if (type === "json") {
-        const blob = new Blob([JSON.stringify(eventLog, null, 2)], { type: "application/json" });
-        download(blob, "log.json");
+        download(new Blob([JSON.stringify(eventLog, null, 2)]), "log.json");
     }
 
     if (type === "txt") {
-        const text = eventLog.map(e => `${e.time} — ${e.text}`).join("\n");
-        const blob = new Blob([text], { type: "text/plain" });
-        download(blob, "log.txt");
+        download(new Blob([eventLog.map(e => `${e.time} — ${e.text}`).join("\n")]), "log.txt");
     }
 
     if (type === "csv") {
         const csv = ["time,text", ...eventLog.map(e => `"${e.time}","${e.text.replace(/"/g, '""')}"`)].join("\n");
-        const blob = new Blob([csv], { type: "text/csv" });
-        download(blob, "log.csv");
+        download(new Blob([csv], { type: "text/csv" }), "log.csv");
     }
 });
 
-function download(blob, name) {
+function download(blob, filename) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = name;
+    a.download = filename;
     a.click();
     URL.revokeObjectURL(url);
 }
