@@ -81,3 +81,10 @@ If you use this project in a network service or hosted application,
 AGPLv3 requires that you make your modified source code available to your users.
 
 This helps ensure that all future versions of the project stay free and open for everyone.
+
+## Contribution Policy
+
+All contributions to this project must be licensed under the same license (AGPLv3).
+
+By submitting code, you agree that your contribution will be distributed under the AGPLv3 license so the project remains fully free and open-source.
+
