@@ -27,17 +27,35 @@
 <body>
 
 <div class="container glass">
+
     <h1>Support Time Tracker</h1>
 
-    <div class="timer-display">
-        <span id="timeDisplay">0 min</span>
+    <!-- Timer + Cost Panel -->
+    <div class="metrics glass-inner">
+        <div class="metric-row">
+            <span class="label">Time:</span>
+            <span id="timeDisplay">0 min</span>
+        </div>
+
+        <div class="metric-row">
+            <span class="label">Cost:</span>
+            <span id="costDisplay">€0.00</span>
+        </div>
+
+        <span class="info-icon" id="billingInfo">ⓘ</span>
+        <div class="tooltip" id="tooltip">
+            Time is tracked internally in seconds.<br>
+            Displayed minutes are <strong>rounded up</strong>.
+        </div>
     </div>
 
+    <!-- Timer Controls -->
     <div class="controls">
-        <button id="startPauseResumeBtn" class="btn primary">Start</button>
+        <button id="startPauseBtn" class="btn primary">Start</button>
         <button id="stopBtn" class="btn danger" disabled>Stop</button>
     </div>
 
+    <!-- Rate Controls -->
     <div class="rate-row">
         <label>Rate (€/min):</label>
         <div class="rate-controls">
@@ -47,14 +65,12 @@
         </div>
     </div>
 
-    <p class="note">
-        Time is tracked internally in seconds. Displayed minutes are <strong>rounded up</strong>.
-    </p>
-
+    <!-- Manual Logging -->
     <div class="manual-log">
         <input id="manualInput" placeholder="Add a note and press Enter…" />
     </div>
 
+    <!-- Export -->
     <div class="export-row">
         <select id="exportType">
             <option value="json">Export as JSON</option>
@@ -64,12 +80,16 @@
         <button id="exportBtn" class="btn">Download Log</button>
     </div>
 
+    <!-- Event Log -->
     <div class="log glass-inner">
         <h2>Event Log</h2>
         <ul id="logList"></ul>
     </div>
 
 </div>
+
+</body>
+</html>
 
 </body>
 </html>
