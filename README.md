@@ -60,6 +60,22 @@ No build steps or dependencies required.
 
 Deployment usually takes less than a minute.
 
+## Why AGPLv3?
+
+This project is licensed under the GNU Affero General Public License v3 (AGPLv3).
+
+The AGPL was chosen because it guarantees that:
+
+- All users have the freedom to inspect, modify, and improve the software.
+- No company can take the code, make private modifications, and run it as a closed service.
+- Any improvements made by others must remain open and available to the community.
+- The software can never be locked down through DRM, device restrictions, or proprietary forks.
+
+If you use this project in a network service or hosted application,  
+AGPLv3 requires that you make your modified source code available to your users.
+
+This helps ensure that all future versions of the project stay free and open for everyone.
+
 ## Notes
 
 - All data is kept in memory only. Reloading the page clears the session.
