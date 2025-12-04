@@ -39,4 +39,4 @@ By submitting a pull request, you confirm that:
 This ensures that the entire project stays free and open-source for all users.
 
 ## Code of Conduct
-Please see [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) for community guidelines.
+Please behave.
